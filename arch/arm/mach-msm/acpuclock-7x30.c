@@ -158,6 +158,14 @@ static struct clkctl_acpu_speed acpu_freq_tbl[] = {
 	{ 0 }
 };
 
+#define MAX_CLK 1804800
+unsigned long acpuclk_usr_set_max(void)
+{
+	int ret = acpuclk_get_rate(smp_processor_id());
+	acpuclk_set_rate(smp_processor_id(), MAX_CLK, SETRATE_CPUFREQ);
+	return ret;
+}
+
 static int acpuclk_set_acpu_vdd(struct clkctl_acpu_speed *s)
 {
 	int ret = msm_spm_set_vdd(0, s->vdd_raw);
